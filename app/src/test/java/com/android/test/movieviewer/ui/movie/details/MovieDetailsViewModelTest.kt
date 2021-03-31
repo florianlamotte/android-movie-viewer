@@ -1,12 +1,18 @@
 package com.android.test.movieviewer.ui.movie.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
+import com.android.test.movieviewer.domain.util.Response
+import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
 import com.android.test.movieviewer.ui.movie.util.TestCoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.given
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
@@ -37,7 +43,7 @@ class MovieDetailsViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        viewModel = MovieDetailsViewModel(coroutineContextProvider, getMovieById)
+        viewModel = MovieDetailsViewModel(coroutineContextProvider, getMovieById, MovieId("emoji"))
     }
 
     @After
@@ -47,7 +53,9 @@ class MovieDetailsViewModelTest {
 
     // Test when get movie returns error, then state loading / error
     @Test
-    fun `given invalid model data, then return loading and error view state`() {
+    fun `given invalid model data, then return loading and error view state`() = runBlockingTest {
+        given(getMovieById(any())).willReturn(Response.Error)
+
         dispatcher.pauseDispatcher()
         viewModel.getMovieDetails()
 
@@ -57,5 +65,16 @@ class MovieDetailsViewModelTest {
     }
 
     // Test when get movie returns success, then state loading / success
+    @Test
+    fun `given valid model data, then return loading and success view state`() = runBlockingTest {
+        given(getMovieById(any()))
+            .willReturn(Response.Success(EMOJI_MOVIE))
+        dispatcher.pauseDispatcher()
+        viewModel.getMovieDetails()
+
+        assertEquals(UIState.Loading, viewModel.uiState.value)
+        dispatcher.resumeDispatcher()
+        assertEquals(UIState.Success(MovieDetailsItem("The Emoji Movie")), viewModel.uiState.value)
+    }
 
 }

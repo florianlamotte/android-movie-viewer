@@ -8,5 +8,8 @@ data class ApiDataMoviesNowPlayingResponse(
 )
 
 data class ApiDataMovieNowPlaying(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("title")
     val title: String
 )

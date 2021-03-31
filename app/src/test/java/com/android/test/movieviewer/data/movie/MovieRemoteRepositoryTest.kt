@@ -3,8 +3,8 @@ package com.android.test.movieviewer.data.movie
 import com.android.test.movieviewer.data.movie.api.ApiDataMovieNowPlaying
 import com.android.test.movieviewer.data.movie.api.ApiDataMoviesNowPlayingResponse
 import com.android.test.movieviewer.data.movie.api.ApiTheMovieDb
-import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.util.Response
+import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
 import com.nhaarman.mockitokotlin2.given
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -47,14 +47,14 @@ class MovieRemoteRepositoryTest {
         given(api.moviesNowPlaying()).willReturn(
             ApiDataMoviesNowPlayingResponse(
                 listOf(
-                    ApiDataMovieNowPlaying("The Emoji Movie")
+                    ApiDataMovieNowPlaying("emoji", "The Emoji Movie")
                 )
             )
         )
 
         val actual = movieRemoteRepository.getMovies()
 
-        assertEquals(Response.Success(listOf(Movie("The Emoji Movie"))), actual)
+        assertEquals(Response.Success(listOf(EMOJI_MOVIE)), actual)
     }
 
 }

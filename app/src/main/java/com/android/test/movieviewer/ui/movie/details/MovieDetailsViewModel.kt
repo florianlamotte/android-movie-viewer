@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
+import com.android.test.movieviewer.domain.util.Response
 import com.android.test.movieviewer.ui.util.CoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
 import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(
     private val coroutineContextProvider: CoroutineContextProvider,
-    private val getMovieById: GetMovieById
+    private val getMovieById: GetMovieById,
+    private val movieId: MovieId
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<UIState<MovieDetailsItem>>()
@@ -20,7 +23,15 @@ class MovieDetailsViewModel(
     fun getMovieDetails() {
         _uiState.postValue(UIState.Loading)
         viewModelScope.launch(coroutineContextProvider.IO) {
-            _uiState.postValue(UIState.Error)
+            val state = when (val response = getMovieById(movieId)) {
+                is Response.Error -> UIState.Error
+                is Response.Success -> UIState.Success(
+                    MovieDetailsItem(
+                        response.data.title
+                    )
+                )
+            }
+            _uiState.postValue(state)
         }
     }
 

@@ -2,8 +2,10 @@ package com.android.test.movieviewer.ui.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android.test.movieviewer.domain.movie.Movie
+import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovies
 import com.android.test.movieviewer.domain.util.Response
+import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
 import com.android.test.movieviewer.ui.movie.util.TestCoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
 import com.nhaarman.mockitokotlin2.given
@@ -81,7 +83,7 @@ class MoviesListViewModelTest : TestCase() {
     @Test
     fun `given valid model data, then return valid movies items`() = runBlockingTest {
         given(getMovies.execute()).willReturn(Response.Success(listOf(
-            Movie("The Emoji Movie")
+            EMOJI_MOVIE
         )))
 
         viewModel.getMovies()
