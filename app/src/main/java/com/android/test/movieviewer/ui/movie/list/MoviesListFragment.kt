@@ -21,8 +21,7 @@ class MoviesListFragment : Fragment() {
     }
 
     private var _binding: MoviesListFragmentBinding? = null
-    private val binding: MoviesListFragmentBinding
-        get() = _binding!!
+    private val binding: MoviesListFragmentBinding get() = _binding!!
 
     @Inject
     lateinit var viewModelProvider: MoviesListViewModelProvider

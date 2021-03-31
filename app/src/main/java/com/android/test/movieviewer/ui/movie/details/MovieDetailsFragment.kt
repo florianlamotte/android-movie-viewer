@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.test.movieviewer.databinding.MovieDetailsFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
     companion object {
@@ -16,6 +19,9 @@ class MovieDetailsFragment : Fragment() {
 
     private var _binding: MovieDetailsFragmentBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var viewModelProvider: MovieDetailsViewModelProvider
 
     private lateinit var viewModel: MovieDetailsViewModel
 
@@ -34,7 +40,7 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelProvider).get(MovieDetailsViewModel::class.java)
     }
 
     override fun onDestroyView() {

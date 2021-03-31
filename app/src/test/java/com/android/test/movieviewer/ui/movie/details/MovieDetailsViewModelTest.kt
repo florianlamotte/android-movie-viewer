@@ -1,15 +1,24 @@
 package com.android.test.movieviewer.ui.movie.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
+import com.android.test.movieviewer.ui.movie.util.TestCoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MovieDetailsViewModelTest {
 
@@ -19,17 +28,34 @@ class MovieDetailsViewModelTest {
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
+    private val coroutineContextProvider = TestCoroutineContextProvider()
+    private val dispatcher = coroutineContextProvider.testCoroutineDispatcher
+
+    @Mock
+    private lateinit var getMovieById: GetMovieById
+
     @Before
     fun setup() {
-        viewModel = MovieDetailsViewModel()
+        Dispatchers.setMain(dispatcher)
+        viewModel = MovieDetailsViewModel(coroutineContextProvider, getMovieById)
     }
 
-    // Test when get movie returns error, then state loading error
+    @After
+    fun teardown() {
+        Dispatchers.resetMain()
+    }
+
+    // Test when get movie returns error, then state loading / error
     @Test
     fun `given invalid model data, then return loading and error view state`() {
+        dispatcher.pauseDispatcher()
         viewModel.getMovieDetails()
 
+        assertEquals(UIState.Loading, viewModel.uiState.value)
+        dispatcher.resumeDispatcher()
         assertEquals(UIState.Error, viewModel.uiState.value)
     }
+
+    // Test when get movie returns success, then state loading / success
 
 }

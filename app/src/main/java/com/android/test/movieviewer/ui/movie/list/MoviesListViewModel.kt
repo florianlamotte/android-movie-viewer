@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.movie.usecase.GetMovies
 import com.android.test.movieviewer.domain.util.Response
+import com.android.test.movieviewer.ui.util.CoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
 import kotlinx.coroutines.launch
 
 class MoviesListViewModel(
+    private val coroutineContextProvider: CoroutineContextProvider,
     private val getMovies: GetMovies
 ) : ViewModel() {
 
@@ -20,7 +22,7 @@ class MoviesListViewModel(
 
     fun getMovies() {
         _state.postValue(UIState.Loading)
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineContextProvider.IO) {
             val uiState = when (val response = getMovies.execute()) {
                 is Response.Error -> UIState.Error
                 is Response.Success<List<Movie>> -> {

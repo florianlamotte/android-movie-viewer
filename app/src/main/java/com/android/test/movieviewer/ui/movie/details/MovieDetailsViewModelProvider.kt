@@ -1,20 +1,17 @@
-package com.android.test.movieviewer.ui.movie.list
+package com.android.test.movieviewer.ui.movie.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.android.test.movieviewer.domain.movie.usecase.GetMovies
+import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.ui.util.CoroutineContextProvider
 import javax.inject.Inject
 
-class MoviesListViewModelProvider @Inject constructor(
+class MovieDetailsViewModelProvider @Inject constructor(
     private val coroutineContextProvider: CoroutineContextProvider,
-    private val getMovies: GetMovies
+    private val getMovieById: GetMovieById
 ): ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MoviesListViewModel(
-            coroutineContextProvider,
-            getMovies
-        ) as T
+        return MovieDetailsViewModel(coroutineContextProvider, getMovieById) as T
     }
 }
