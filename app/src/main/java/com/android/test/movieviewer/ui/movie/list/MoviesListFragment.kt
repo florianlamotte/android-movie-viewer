@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.test.movieviewer.databinding.MoviesListFragmentBinding
+import com.android.test.movieviewer.ui.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -30,21 +31,47 @@ class MoviesListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = MoviesListFragmentBinding.inflate(
             layoutInflater,
             container,
             false
         )
 
-        val adapter = MoviesListAdapter()
-        binding.listMovies.adapter = adapter
-
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = MoviesListAdapter()
+        binding.listMovies.adapter = adapter
+
         viewModel = ViewModelProvider(this, viewModelProvider).get(MoviesListViewModel::class.java)
+
+        viewModel.state.observe(viewLifecycleOwner) { uiState ->
+            val (loading, error, list) = when(uiState) {
+                is UIState.Loading -> {
+                    listOf(View.VISIBLE, View.GONE, View.GONE)
+                }
+
+                is UIState.Error -> {
+                    listOf(View.GONE, View.VISIBLE, View.GONE)
+                }
+
+                is UIState.Success -> {
+                    adapter.data = uiState.data
+                    listOf(View.GONE, View.GONE, View.VISIBLE)
+                }
+            }
+            with(binding) {
+                listMoviesProgress.visibility = loading
+                listMoviesError.visibility = error
+                listMovies.visibility = list
+            }
+        }
+
+        viewModel.getMovies()
     }
 
     override fun onDestroyView() {

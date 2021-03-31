@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MovieViewer</string>
+    <string name="error_message">There was an error!</string>
 </resources>

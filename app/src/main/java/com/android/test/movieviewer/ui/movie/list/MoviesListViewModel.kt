@@ -24,7 +24,7 @@ class MoviesListViewModel(
             val uiState = when (val response = getMovies.execute()) {
                 is Response.Error -> UIState.Error
                 is Response.Success<List<Movie>> -> {
-                    UIState.Success<List<MoviesListItem>>(
+                    UIState.Success(
                         response.data.map {
                             MoviesListItem(it.title)
                         }
