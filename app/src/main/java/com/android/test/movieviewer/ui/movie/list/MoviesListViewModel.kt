@@ -28,7 +28,10 @@ class MoviesListViewModel(
                 is Response.Success<List<Movie>> -> {
                     UIState.Success(
                         response.data.map {
-                            MoviesListItem(it.title)
+                            MoviesListItem(
+                                it.id,
+                                it.title
+                            )
                         }
                     )
                 }

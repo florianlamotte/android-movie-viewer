@@ -1,6 +1,7 @@
 package com.android.test.movieviewer.ui.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovies
 import com.android.test.movieviewer.domain.util.Response
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
@@ -88,7 +89,10 @@ class MoviesListViewModelTest : TestCase() {
 
         val actual = viewModel.state.value as UIState.Success
         assertEquals(listOf(
-            MoviesListItem("The Emoji Movie")),
+            MoviesListItem(
+                MovieId("emoji"),
+                "The Emoji Movie")
+        ),
             actual.data
         )
     }

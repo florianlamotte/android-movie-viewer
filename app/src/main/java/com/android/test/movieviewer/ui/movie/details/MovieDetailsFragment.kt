@@ -46,9 +46,13 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
+        val movieId = args.id
+
         viewModel = ViewModelProvider(
             this,
-            MovieDetailsViewModelProvider(coroutineContextProvider, getMovieById, MovieId("399566"))
+            MovieDetailsViewModelProvider(coroutineContextProvider, getMovieById, movieId)
         ).get(MovieDetailsViewModel::class.java)
 
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->

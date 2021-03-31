@@ -86,6 +86,8 @@ class MoviesListFragment : Fragment() {
         item: MoviesListItem
     ) {
         findNavController()
-            .navigate(R.id.action_moviesListFragment_to_movieDetailsFragment)
+            .navigate(
+                MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(item.id)
+            )
     }
 }
