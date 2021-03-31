@@ -9,7 +9,7 @@ class GetMovies(
 ) {
 
     suspend fun execute(): Response<List<Movie>> {
-        return Response.Error
+        return movieRepository.getMovies()
     }
 
 }

@@ -1,5 +1,6 @@
 package com.android.test.movieviewer.domain.movie.usecase
 
+import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.movie.MovieRepository
 import com.android.test.movieviewer.domain.util.Response
 import com.nhaarman.mockitokotlin2.given
@@ -36,4 +37,12 @@ class GetMoviesTest {
     }
 
     // Given repository responds success, then return success
+    @Test
+    fun `given repository responds success, then return success`() = runBlockingTest {
+        given(movieRepository.getMovies()).willReturn(Response.Success(listOf(Movie("The Emoji Movie"))))
+
+        val actual = getMovies.execute()
+
+        assertEquals(Response.Success(listOf(Movie("The Emoji Movie"))), actual)
+    }
 }
