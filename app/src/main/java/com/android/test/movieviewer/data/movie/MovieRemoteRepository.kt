@@ -10,7 +10,14 @@ class MovieRemoteRepository(
 ): MovieRepository {
 
     override fun getMovies(): Response<List<Movie>> {
-        return Response.Error
+        return try {
+            val moviesNowPlaying = theMovieDbAPi.moviesNowPlaying().map {
+                Movie(it.title)
+            }
+            Response.Success(moviesNowPlaying)
+        } catch (e: Exception) {
+            Response.Error
+        }
     }
 
 }
