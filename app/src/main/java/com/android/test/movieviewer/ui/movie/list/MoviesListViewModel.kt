@@ -20,10 +20,10 @@ class MoviesListViewModel(
     val state: LiveData<UIState<List<MoviesListItem>>>
         get() = _state
 
-    fun getMovies() {
+    fun refreshMovies() {
         _state.postValue(UIState.Loading)
         viewModelScope.launch(coroutineContextProvider.IO) {
-            val uiState = when (val response = getMovies.execute()) {
+            val uiState = when (val response = getMovies()) {
                 is Response.Error -> UIState.Error
                 is Response.Success<List<Movie>> -> {
                     UIState.Success(

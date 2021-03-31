@@ -25,4 +25,8 @@ class MovieRemoteRepository @Inject constructor(
         }
     }
 
+    override suspend fun getMovieById(id: MovieId): Response<Movie> {
+        TODO("Not yet implemented")
+    }
+
 }

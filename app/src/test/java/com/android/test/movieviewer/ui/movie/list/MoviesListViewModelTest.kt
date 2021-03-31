@@ -1,8 +1,6 @@
 package com.android.test.movieviewer.ui.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.android.test.movieviewer.domain.movie.Movie
-import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovies
 import com.android.test.movieviewer.domain.util.Response
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
@@ -56,10 +54,10 @@ class MoviesListViewModelTest : TestCase() {
     // Test invalid data / error received
     @Test
     fun `given invalid model data, then return loading and error view state`() = runBlockingTest {
-        given(getMovies.execute()).willReturn(Response.Error)
+        given(getMovies()).willReturn(Response.Error)
 
         dispatcher.pauseDispatcher()
-        viewModel.getMovies()
+        viewModel.refreshMovies()
 
         assertEquals(UIState.Loading, viewModel.state.value)
         dispatcher.resumeDispatcher()
@@ -69,10 +67,10 @@ class MoviesListViewModelTest : TestCase() {
     // Test loading then success view state
     @Test
     fun `given valid model data, then return loading and success view state`() = runBlockingTest {
-        given(getMovies.execute()).willReturn(Response.Success(emptyList()))
+        given(getMovies()).willReturn(Response.Success(emptyList()))
 
         dispatcher.pauseDispatcher()
-        viewModel.getMovies()
+        viewModel.refreshMovies()
 
         assertEquals(UIState.Loading, viewModel.state.value)
         dispatcher.resumeDispatcher()
@@ -82,11 +80,11 @@ class MoviesListViewModelTest : TestCase() {
     // Test valid data received in success view state
     @Test
     fun `given valid model data, then return valid movies items`() = runBlockingTest {
-        given(getMovies.execute()).willReturn(Response.Success(listOf(
+        given(getMovies()).willReturn(Response.Success(listOf(
             EMOJI_MOVIE
         )))
 
-        viewModel.getMovies()
+        viewModel.refreshMovies()
 
         val actual = viewModel.state.value as UIState.Success
         assertEquals(listOf(

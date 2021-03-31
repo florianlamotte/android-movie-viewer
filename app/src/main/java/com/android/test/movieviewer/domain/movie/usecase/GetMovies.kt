@@ -9,7 +9,7 @@ class GetMovies @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
 
-    suspend fun execute(): Response<List<Movie>> {
+    suspend operator fun invoke(): Response<List<Movie>> {
         return movieRepository.getMovies()
     }
 

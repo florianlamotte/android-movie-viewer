@@ -74,7 +74,7 @@ class MoviesListFragment : Fragment() {
             }
         }
 
-        viewModel.getMovies()
+        viewModel.refreshMovies()
     }
 
     override fun onDestroyView() {
