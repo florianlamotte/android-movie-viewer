@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 data class ApiDataMoviesNowPlayingResponse(
     @SerializedName("results")
-    val movies: List<ApiDataMovieNowPlaying>
+    val movies: List<ApiDataMovieNowPlaying>,
 )
 
 data class ApiDataMovieNowPlaying(
     @SerializedName("id")
     val id: String,
     @SerializedName("title")
-    val title: String
+    val title: String,
 )
 
 data class ApiDataMovieResponse(
@@ -22,12 +22,26 @@ data class ApiDataMovieResponse(
     @SerializedName("overview")
     val overview: String,
     @SerializedName("belongs_to_collection")
-    val collection: ApiDataMovieCollection
+    val collection: ApiDataMovieCollection,
 )
 
 data class ApiDataMovieCollection(
     @SerializedName("id")
     val collectionId: String,
     @SerializedName("name")
-    val collectionName: String
+    val collectionName: String,
+)
+
+data class ApiDataCollection(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("parts")
+    val parts: List<ApiDataCollectionParts>,
+)
+
+data class ApiDataCollectionParts(
+    @SerializedName("id")
+    val movieId: String,
+    @SerializedName("title")
+    val movieTitle: String,
 )

@@ -1,6 +1,7 @@
 package com.android.test.movieviewer.domain.movie.usecase
 
 import com.android.test.movieviewer.domain.movie.Movie
+import com.android.test.movieviewer.domain.movie.MovieDetails
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.MovieRepository
 import com.android.test.movieviewer.domain.util.Response
@@ -12,7 +13,7 @@ class GetMovieById @Inject constructor(
 
     suspend operator fun invoke(
         id: MovieId
-    ): Response<Movie> {
+    ): Response<MovieDetails> {
         return movieRepository.getMovieById(id)
     }
 

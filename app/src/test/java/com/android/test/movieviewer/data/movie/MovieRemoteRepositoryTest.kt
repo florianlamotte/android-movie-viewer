@@ -1,10 +1,12 @@
 package com.android.test.movieviewer.data.movie
 
-import com.android.test.movieviewer.data.movie.api.ApiDataMovieNowPlaying
-import com.android.test.movieviewer.data.movie.api.ApiDataMoviesNowPlayingResponse
-import com.android.test.movieviewer.data.movie.api.ApiTheMovieDb
+import com.android.test.movieviewer.data.movie.api.*
+import com.android.test.movieviewer.domain.movie.MovieDetails
+import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.util.Response
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
+import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE2
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.given
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -31,9 +33,10 @@ class MovieRemoteRepositoryTest {
         )
     }
 
+    // MOVIES
     // Given API returns error, we return an error response
     @Test
-    fun `given API throws error, then return error response`() = runBlockingTest {
+    fun `given movies API throws error, then return error response`() = runBlockingTest {
         given(api.moviesNowPlaying()).willThrow(RuntimeException("Some issue"))
 
         val actual = movieRemoteRepository.getMovies()
@@ -43,7 +46,7 @@ class MovieRemoteRepositoryTest {
 
     // Given API returns success, we return a success response
     @Test
-    fun `given API returns result, then return success response`() = runBlockingTest {
+    fun `given movies API returns result, then return success response`() = runBlockingTest {
         given(api.moviesNowPlaying()).willReturn(
             ApiDataMoviesNowPlayingResponse(
                 listOf(
@@ -55,6 +58,52 @@ class MovieRemoteRepositoryTest {
         val actual = movieRemoteRepository.getMovies()
 
         assertEquals(Response.Success(listOf(EMOJI_MOVIE)), actual)
+    }
+
+    // Given API returns error, we return an error response
+    @Test
+    fun `given movie details API throws error, then return error response`() = runBlockingTest {
+        given(api.movie(any())).willThrow(RuntimeException("Some issue"))
+
+        val actual = movieRemoteRepository.getMovieById(MovieId("some id"))
+
+        assertEquals(Response.Error, actual)
+    }
+
+    // Given API returns success, we return a success response
+    @Test
+    fun `given movie details API returns result, then return success response`() = runBlockingTest {
+        given(api.movie(any())).willReturn(
+            ApiDataMovieResponse(
+                "emoji",
+                "The Emoji Movie",
+                "overview here",
+                ApiDataMovieCollection(
+                    "emo3",
+                    "the emos"
+                )
+            )
+        )
+        given(api.collection(any())).willReturn(
+            ApiDataCollection(
+                "emo3",
+                listOf(
+                    ApiDataCollectionParts("emoji", "The Emoji Movie"),
+                    ApiDataCollectionParts("emoji2", "The Emoji Movie II"),
+                )
+            )
+        )
+
+        val actual: Response<MovieDetails> = movieRemoteRepository.getMovieById(MovieId("some id"))
+
+        assertEquals(Response.Success(
+            MovieDetails(
+                MovieId("emoji"),
+                "The Emoji Movie",
+                "the emos",
+                listOf(EMOJI_MOVIE, EMOJI_MOVIE2)
+            )
+        ), actual)
     }
 
 }

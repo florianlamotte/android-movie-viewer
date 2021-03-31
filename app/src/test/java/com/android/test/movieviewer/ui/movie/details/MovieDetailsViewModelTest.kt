@@ -5,6 +5,7 @@ import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.domain.util.Response
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
+import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE_DETAILS
 import com.android.test.movieviewer.ui.movie.util.TestCoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
 import com.nhaarman.mockitokotlin2.any
@@ -68,7 +69,7 @@ class MovieDetailsViewModelTest {
     @Test
     fun `given valid model data, then return loading and success view state`() = runBlockingTest {
         given(getMovieById(any()))
-            .willReturn(Response.Success(EMOJI_MOVIE))
+            .willReturn(Response.Success(EMOJI_MOVIE_DETAILS))
         dispatcher.pauseDispatcher()
         viewModel.getMovieDetails()
 

@@ -4,6 +4,7 @@ import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.MovieRepository
 import com.android.test.movieviewer.domain.util.Response
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
+import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE_DETAILS
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.given
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,10 +44,10 @@ class GetMovieByIdTest {
     // Given repository responds success, then return success
     @Test
     fun `given repository responds success, then return success`() = runBlockingTest {
-        given(repository.getMovieById(any())).willReturn(Response.Success(EMOJI_MOVIE))
+        given(repository.getMovieById(any())).willReturn(Response.Success(EMOJI_MOVIE_DETAILS))
 
         val actual = getMovieById(MovieId("some id"))
 
-        assertEquals(Response.Success(EMOJI_MOVIE), actual)
+        assertEquals(Response.Success(EMOJI_MOVIE_DETAILS), actual)
     }
 }

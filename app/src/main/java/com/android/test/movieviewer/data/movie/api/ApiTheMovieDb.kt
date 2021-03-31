@@ -19,6 +19,10 @@ interface ApiTheMovieDb {
     @GET("movie/{movieId}?api_key=${API_KEY}")
     suspend fun movie(@Path("movieId") movieId: String): ApiDataMovieResponse
 
+    @Throws(RuntimeException::class)
+    @GET("collection/{collectionId}?api_key=${API_KEY}")
+    suspend fun collection(@Path("collectionId") collectionId: String): ApiDataCollection
+
 }
 
 object RetrofitApi {
