@@ -2,7 +2,7 @@ package com.android.test.movieviewer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.android.test.movieviewer.ui.main.MainFragment
+import com.android.test.movieviewer.ui.movie.list.MoviesListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, MoviesListFragment.newInstance())
                 .commitNow()
         }
     }
