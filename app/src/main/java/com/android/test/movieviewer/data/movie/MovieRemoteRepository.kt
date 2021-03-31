@@ -9,9 +9,9 @@ class MovieRemoteRepository(
     private val theMovieDbAPi: ApiTheMovieDb
 ): MovieRepository {
 
-    override fun getMovies(): Response<List<Movie>> {
+    override suspend fun getMovies(): Response<List<Movie>> {
         return try {
-            val moviesNowPlaying = theMovieDbAPi.moviesNowPlaying().map {
+            val moviesNowPlaying = theMovieDbAPi.moviesNowPlaying().movies.map {
                 Movie(it.title)
             }
             Response.Success(moviesNowPlaying)

@@ -4,6 +4,6 @@ import com.android.test.movieviewer.domain.util.Response
 
 interface MovieRepository {
 
-    fun getMovies(): Response<List<Movie>>
+    suspend fun getMovies(): Response<List<Movie>>
 
 }
