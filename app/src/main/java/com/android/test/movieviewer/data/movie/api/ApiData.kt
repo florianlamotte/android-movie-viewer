@@ -13,3 +13,21 @@ data class ApiDataMovieNowPlaying(
     @SerializedName("title")
     val title: String
 )
+
+data class ApiDataMovieResponse(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("title")
+    val title: String,
+    @SerializedName("overview")
+    val overview: String,
+    @SerializedName("belongs_to_collection")
+    val collection: ApiDataMovieCollection
+)
+
+data class ApiDataMovieCollection(
+    @SerializedName("id")
+    val collectionId: String,
+    @SerializedName("name")
+    val collectionName: String
+)

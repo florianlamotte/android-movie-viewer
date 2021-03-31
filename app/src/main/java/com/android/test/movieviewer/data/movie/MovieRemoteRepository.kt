@@ -26,7 +26,17 @@ class MovieRemoteRepository @Inject constructor(
     }
 
     override suspend fun getMovieById(id: MovieId): Response<Movie> {
-        TODO("Not yet implemented")
+        return try {
+            val movie = theMovieDbAPi.movie(id.value).let {
+                Movie(
+                    MovieId(it.id),
+                    it.title
+                )
+            }
+            Response.Success(movie)
+        } catch (e: Exception) {
+            Response.Error
+        }
     }
 
 }
