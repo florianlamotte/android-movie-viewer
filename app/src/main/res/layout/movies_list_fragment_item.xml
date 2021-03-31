@@ -9,7 +9,7 @@
         android:id="@+id/movie_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/list_margin"
+        android:layout_margin="@dimen/views_margin"
         tools:text="This is the Emoji movie" />
 
 </LinearLayout>

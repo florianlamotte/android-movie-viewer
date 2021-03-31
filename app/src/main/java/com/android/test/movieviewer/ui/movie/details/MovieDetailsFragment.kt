@@ -10,6 +10,7 @@ import com.android.test.movieviewer.databinding.MovieDetailsFragmentBinding
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.ui.util.CoroutineContextProvider
+import com.android.test.movieviewer.ui.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,8 +48,36 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(
             this,
-            MovieDetailsViewModelProvider(coroutineContextProvider, getMovieById, MovieId("someId"))
+            MovieDetailsViewModelProvider(coroutineContextProvider, getMovieById, MovieId("399566"))
         ).get(MovieDetailsViewModel::class.java)
+
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+            val (loading, error, details) = when(uiState) {
+                is UIState.Loading -> {
+                    listOf(View.VISIBLE, View.GONE, View.GONE)
+                }
+
+                is UIState.Error -> {
+                    listOf(View.GONE, View.VISIBLE, View.GONE)
+                }
+
+                is UIState.Success -> {
+                    with(binding) {
+                        movieDetailsTitle.text = uiState.data.title
+                        movieDetailsCollection.text = uiState.data.collectionName
+                    }
+
+                    listOf(View.GONE, View.GONE, View.VISIBLE)
+                }
+            }
+            with(binding) {
+                movieDetailsProgress.visibility = loading
+                moviesDetailsError.visibility = error
+                movieDetailsGroup.visibility = details
+            }
+        }
+
+        viewModel.getMovieDetails()
     }
 
     override fun onDestroyView() {

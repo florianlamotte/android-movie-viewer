@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/views_margin"
+    android:orientation="vertical"
     tools:context=".ui.movie.details.MovieDetailsFragment">
 
+    <ProgressBar
+        android:id="@+id/movie_details_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
+        android:id="@+id/movies_details_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:text="@string/error_message"
+        android:gravity="center"
+        android:visibility="gone" />
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/movie_details_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/movie_details_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="The Emoji movie" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/collection_text" />
+
+        <TextView
+            android:id="@+id/movie_details_collection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="The Emos" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
