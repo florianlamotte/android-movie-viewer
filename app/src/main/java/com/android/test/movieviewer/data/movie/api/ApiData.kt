@@ -22,7 +22,7 @@ data class ApiDataMovieResponse(
     @SerializedName("overview")
     val overview: String,
     @SerializedName("belongs_to_collection")
-    val collection: ApiDataMovieCollection,
+    val collection: ApiDataMovieCollection?,
 )
 
 data class ApiDataMovieCollection(

@@ -30,8 +30,8 @@ class MovieDetailsViewModel(
                     val item = with(response.data) {
                         MovieDetailsItem(
                             title,
-                            collectionName,
-                            movieCollection.map { collectionItem ->
+                            collection?.collectionName,
+                            collection?.movieCollection?.map { collectionItem ->
                                 CollectionItem(
                                     collectionItem.id,
                                     collectionItem.title

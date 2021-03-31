@@ -11,6 +11,10 @@ data class Movie(
 data class MovieDetails(
     val id: MovieId,
     val title: String,
+    val collection: MovieCollection?
+)
+
+data class MovieCollection(
     val collectionName: String,
     val movieCollection: List<Movie>
 )

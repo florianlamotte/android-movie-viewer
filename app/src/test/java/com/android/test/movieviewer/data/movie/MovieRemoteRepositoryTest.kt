@@ -1,6 +1,7 @@
 package com.android.test.movieviewer.data.movie
 
 import com.android.test.movieviewer.data.movie.api.*
+import com.android.test.movieviewer.domain.movie.MovieCollection
 import com.android.test.movieviewer.domain.movie.MovieDetails
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.util.Response
@@ -100,8 +101,33 @@ class MovieRemoteRepositoryTest {
             MovieDetails(
                 MovieId("emoji"),
                 "The Emoji Movie",
-                "the emos",
-                listOf(EMOJI_MOVIE, EMOJI_MOVIE2)
+                MovieCollection(
+                    "the emos",
+                    listOf(EMOJI_MOVIE, EMOJI_MOVIE2)
+                )
+            )
+        ), actual)
+    }
+
+    // Given API returns success with null collection, we return a success response
+    @Test
+    fun `given movie details API returns result with null collection, then return success response`() = runBlockingTest {
+        given(api.movie(any())).willReturn(
+            ApiDataMovieResponse(
+                "emoji",
+                "The Emoji Movie",
+                "overview here",
+                null
+            )
+        )
+
+        val actual: Response<MovieDetails> = movieRemoteRepository.getMovieById(MovieId("some id"))
+
+        assertEquals(Response.Success(
+            MovieDetails(
+                MovieId("emoji"),
+                "The Emoji Movie",
+                null
             )
         ), actual)
     }

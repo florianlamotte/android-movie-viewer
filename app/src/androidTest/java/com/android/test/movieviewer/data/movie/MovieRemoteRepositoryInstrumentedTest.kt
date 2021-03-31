@@ -37,6 +37,17 @@ class MovieRemoteRepositoryInstrumentedTest {
         assertTrue(actual is Response.Success)
         with(actual as Response.Success) {
             assertTrue(data.title == "Godzilla vs. Kong")
+            assertTrue(data.collection != null)
+        }
+    }
+
+    @Test
+    fun testMovieResponseNullCollection() = runBlocking {
+        val actual = repository.getMovieById(MovieId("458576"))
+        assertTrue(actual is Response.Success)
+        with(actual as Response.Success) {
+            assertTrue(data.title == "Monster Hunter")
+            assertTrue(data.collection == null)
         }
     }
 

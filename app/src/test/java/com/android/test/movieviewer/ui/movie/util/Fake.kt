@@ -1,6 +1,7 @@
 package com.android.test.movieviewer.ui.movie.util
 
 import com.android.test.movieviewer.domain.movie.Movie
+import com.android.test.movieviewer.domain.movie.MovieCollection
 import com.android.test.movieviewer.domain.movie.MovieDetails
 import com.android.test.movieviewer.domain.movie.MovieId
 
@@ -21,10 +22,12 @@ class Fake {
         val EMOJI_MOVIE_DETAILS = MovieDetails(
             MovieId("emoji"),
             "The Emoji Movie",
-            "The Emos",
-            listOf(
-                EMOJI_MOVIE,
-                EMOJI_MOVIE2
+            MovieCollection(
+                "The Emos",
+                listOf(
+                    EMOJI_MOVIE,
+                    EMOJI_MOVIE2
+                )
             )
         )
 
