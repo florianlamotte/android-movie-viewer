@@ -1,6 +1,7 @@
 package com.android.test.movieviewer.ui.movie.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.domain.util.Response
@@ -75,7 +76,15 @@ class MovieDetailsViewModelTest {
 
         assertEquals(UIState.Loading, viewModel.uiState.value)
         dispatcher.resumeDispatcher()
-        assertEquals(UIState.Success(MovieDetailsItem("The Emoji Movie")), viewModel.uiState.value)
+        assertEquals(UIState.Success(
+            MovieDetailsItem(
+                "The Emoji Movie",
+                "The Emos",
+                listOf(
+                    CollectionItem(MovieId("emoji"), "The Emoji Movie"),
+                    CollectionItem(MovieId("emoji2"), "The Emoji Movie II"),
+                )
+            )), viewModel.uiState.value)
     }
 
 }

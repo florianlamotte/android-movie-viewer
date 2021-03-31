@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.domain.util.Response
@@ -25,11 +26,21 @@ class MovieDetailsViewModel(
         viewModelScope.launch(coroutineContextProvider.IO) {
             val state = when (val response = getMovieById(movieId)) {
                 is Response.Error -> UIState.Error
-                is Response.Success -> UIState.Success(
-                    MovieDetailsItem(
-                        response.data.title
-                    )
-                )
+                is Response.Success -> {
+                    val item = with(response.data) {
+                        MovieDetailsItem(
+                            title,
+                            collectionName,
+                            movieCollection.map { collectionItem ->
+                                CollectionItem(
+                                    collectionItem.id,
+                                    collectionItem.title
+                                )
+                            }
+                        )
+                    }
+                    UIState.Success(item)
+                }
             }
             _uiState.postValue(state)
         }
