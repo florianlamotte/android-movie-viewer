@@ -35,6 +35,10 @@ class MoviesListFragment : Fragment() {
             container,
             false
         )
+
+        val adapter = MoviesListAdapter()
+        binding.listMovies.adapter = adapter
+
         return binding.root
     }
 
