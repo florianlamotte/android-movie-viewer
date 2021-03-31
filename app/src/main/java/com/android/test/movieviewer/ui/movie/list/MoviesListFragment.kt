@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.test.movieviewer.R
+import com.android.test.movieviewer.databinding.MoviesListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -17,6 +17,10 @@ class MoviesListFragment : Fragment() {
         fun newInstance() = MoviesListFragment()
     }
 
+    private var _binding: MoviesListFragmentBinding? = null
+    private val binding: MoviesListFragmentBinding
+        get() = _binding!!
+
     @Inject
     lateinit var viewModelProvider: MoviesListViewModelProvider
 
@@ -26,13 +30,21 @@ class MoviesListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.movies_list_fragment, container, false)
+        _binding = MoviesListFragmentBinding.inflate(
+            layoutInflater,
+            container,
+            false
+        )
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelProvider).get(MoviesListViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
