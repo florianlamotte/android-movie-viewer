@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.test.movieviewer.databinding.MoviesListFragmentItemBinding
 
-class MoviesListAdapter : RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder>() {
+class MoviesListAdapter(
+    private val onItemClicked: (MoviesListItem) -> Unit
+) : RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder>() {
 
     var data = listOf<MoviesListItem>()
         set(value) {
@@ -26,7 +28,13 @@ class MoviesListAdapter : RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder
 
     override fun getItemCount(): Int = data.size
 
-    class MovieViewHolder(private val binding: MoviesListFragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MovieViewHolder(private val binding: MoviesListFragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                onItemClicked(data[adapterPosition])
+            }
+        }
 
         fun bind(item: MoviesListItem) {
             with(binding) {

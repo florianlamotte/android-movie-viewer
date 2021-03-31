@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.android.test.movieviewer.R
 import com.android.test.movieviewer.databinding.MoviesListFragmentBinding
 import com.android.test.movieviewer.ui.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +46,9 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = MoviesListAdapter()
+        val adapter = MoviesListAdapter { item ->
+            onItemClicked(item)
+        }
         binding.listMovies.adapter = adapter
 
         viewModel = ViewModelProvider(this, viewModelProvider).get(MoviesListViewModel::class.java)
@@ -75,7 +79,14 @@ class MoviesListFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
+    }
+
+    private fun onItemClicked(
+        item: MoviesListItem
+    ) {
+        findNavController()
+            .navigate(R.id.action_moviesListFragment_to_movieDetailsFragment)
     }
 }

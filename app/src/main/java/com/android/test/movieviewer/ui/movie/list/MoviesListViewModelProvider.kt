@@ -8,6 +8,7 @@ import javax.inject.Inject
 class MoviesListViewModelProvider @Inject constructor(
     private val getMovies: GetMovies
 ): ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return MoviesListViewModel(
             getMovies
