@@ -1,9 +1,10 @@
 package com.android.test.movieviewer.domain.util
 
-sealed class Response {
+sealed class Response<out T : Any> {
 
-    object Error: Response()
+    object Error: Response<Nothing>()
 
-    class Success: Response()
-
+    data class Success<out T : Any>(
+        val data: T
+    ) : Response<T>()
 }

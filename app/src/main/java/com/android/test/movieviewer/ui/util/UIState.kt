@@ -1,11 +1,13 @@
 package com.android.test.movieviewer.ui.util
 
-sealed class UIState {
+sealed class UIState<out T: Any> {
 
-    object Loading: UIState()
+    object Loading: UIState<Nothing>()
 
-    object Error: UIState()
+    object Error: UIState<Nothing>()
 
-    object Success: UIState()
+    data class Success<out T: Any>(
+        val data: T
+    ): UIState<T>()
 
 }
