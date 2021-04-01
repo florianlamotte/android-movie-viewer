@@ -11,7 +11,8 @@
     <ProgressBar
         android:id="@+id/movie_details_progress"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/movies_details_error"
@@ -29,8 +30,7 @@
 
         <TextView
             android:id="@+id/movie_details_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/text_title"
             tools:text="The Emoji movie" />
 
         <LinearLayout
@@ -40,22 +40,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/text_secondary"
                 android:layout_marginTop="@dimen/views_margin"
                 android:text="@string/collection_text" />
 
             <TextView
                 android:id="@+id/movie_details_collection_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/text_secondary"
                 tools:text="The Emos" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_margin="@dimen/views_margin"
                 android:id="@+id/movie_details_collection_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/views_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
