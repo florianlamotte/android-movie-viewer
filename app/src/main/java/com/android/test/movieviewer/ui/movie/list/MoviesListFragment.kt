@@ -83,8 +83,6 @@ class MoviesListFragment : Fragment() {
                 listMovies.visibility = list
             }
         }
-
-        viewModel.refreshMovies()
     }
 
     override fun onDestroyView() {

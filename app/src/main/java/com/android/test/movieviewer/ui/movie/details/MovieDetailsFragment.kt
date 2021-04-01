@@ -103,8 +103,6 @@ class MovieDetailsFragment : Fragment() {
                 movieDetailsCollectionGroup.visibility = collection
             }
         }
-
-        viewModel.getMovieDetails()
     }
 
     override fun onDestroyView() {

@@ -20,7 +20,11 @@ class MoviesListViewModel(
     val state: LiveData<UIState<List<MoviesListItem>>>
         get() = _state
 
-    fun refreshMovies() {
+    init {
+        refreshMovies()
+    }
+
+    private fun refreshMovies() {
         _state.postValue(UIState.Loading)
         viewModelScope.launch(coroutineContextProvider.IO) {
             val uiState = when (val response = getMovies()) {

@@ -20,7 +20,11 @@ class MovieDetailsViewModel(
     private val _uiState = MutableLiveData<UIState<MovieDetailsItem>>()
     val uiState: LiveData<UIState<MovieDetailsItem>> get() = _uiState
 
-    fun getMovieDetails() {
+    init {
+        getMovieDetails()
+    }
+
+    private fun getMovieDetails() {
         _uiState.postValue(UIState.Loading)
         viewModelScope.launch(coroutineContextProvider.IO) {
             val state = when (val response = getMovieById(movieId)) {

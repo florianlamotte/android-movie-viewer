@@ -41,10 +41,6 @@ class MoviesListViewModelTest : TestCase() {
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        viewModel = MoviesListViewModel(
-            coroutineContextProvider,
-            getMovies
-        )
     }
 
     @After
@@ -58,7 +54,7 @@ class MoviesListViewModelTest : TestCase() {
         given(getMovies()).willReturn(Response.Error)
 
         dispatcher.pauseDispatcher()
-        viewModel.refreshMovies()
+        `init view model`()
 
         assertEquals(UIState.Loading, viewModel.state.value)
         dispatcher.resumeDispatcher()
@@ -71,7 +67,7 @@ class MoviesListViewModelTest : TestCase() {
         given(getMovies()).willReturn(Response.Success(emptyList()))
 
         dispatcher.pauseDispatcher()
-        viewModel.refreshMovies()
+        `init view model`()
 
         assertEquals(UIState.Loading, viewModel.state.value)
         dispatcher.resumeDispatcher()
@@ -85,7 +81,7 @@ class MoviesListViewModelTest : TestCase() {
             EMOJI_MOVIE
         )))
 
-        viewModel.refreshMovies()
+        `init view model`()
 
         val actual = viewModel.state.value as UIState.Success
         assertEquals(listOf(
@@ -96,6 +92,13 @@ class MoviesListViewModelTest : TestCase() {
             )
         ),
             actual.data
+        )
+    }
+
+    private fun `init view model`() {
+        viewModel = MoviesListViewModel(
+            coroutineContextProvider,
+            getMovies
         )
     }
 

@@ -44,7 +44,6 @@ class MovieDetailsViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        viewModel = MovieDetailsViewModel(coroutineContextProvider, getMovieById, MovieId("emoji"))
     }
 
     @After
@@ -58,7 +57,7 @@ class MovieDetailsViewModelTest {
         given(getMovieById(any())).willReturn(Response.Error)
 
         dispatcher.pauseDispatcher()
-        viewModel.getMovieDetails()
+        `init view model`()
 
         assertEquals(UIState.Loading, viewModel.uiState.value)
         dispatcher.resumeDispatcher()
@@ -71,7 +70,7 @@ class MovieDetailsViewModelTest {
         given(getMovieById(any()))
             .willReturn(Response.Success(EMOJI_MOVIE_DETAILS))
         dispatcher.pauseDispatcher()
-        viewModel.getMovieDetails()
+        `init view model`()
 
         assertEquals(UIState.Loading, viewModel.uiState.value)
         dispatcher.resumeDispatcher()
@@ -92,7 +91,7 @@ class MovieDetailsViewModelTest {
         given(getMovieById(any()))
             .willReturn(Response.Success(EMOJI_MOVIE_DETAILS_NO_COLLECTION))
         dispatcher.pauseDispatcher()
-        viewModel.getMovieDetails()
+        `init view model`()
 
         assertEquals(UIState.Loading, viewModel.uiState.value)
         dispatcher.resumeDispatcher()
@@ -102,6 +101,10 @@ class MovieDetailsViewModelTest {
                 null,
                 null
             )), viewModel.uiState.value)
+    }
+
+    private fun `init view model`() {
+        viewModel = MovieDetailsViewModel(coroutineContextProvider, getMovieById, MovieId("emoji"))
     }
 
 }
