@@ -16,8 +16,8 @@
         android:id="@+id/movies_details_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/error_message"
         android:gravity="center"
+        android:text="@string/error_message"
         android:visibility="gone" />
 
     <LinearLayout
@@ -32,16 +32,25 @@
             android:layout_height="wrap_content"
             tools:text="The Emoji movie" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/movie_details_collection_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/collection_text" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/movie_details_collection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="The Emos" />
+            <TextView
+                android:layout_marginTop="@dimen/views_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/collection_text" />
+
+            <TextView
+                android:id="@+id/movie_details_collection_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="The Emos" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

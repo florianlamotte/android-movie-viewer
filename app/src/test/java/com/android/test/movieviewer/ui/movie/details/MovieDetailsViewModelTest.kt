@@ -7,6 +7,7 @@ import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.domain.util.Response
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE_DETAILS
+import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE_DETAILS_NO_COLLECTION
 import com.android.test.movieviewer.ui.movie.util.TestCoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
 import com.nhaarman.mockitokotlin2.any
@@ -84,6 +85,24 @@ class MovieDetailsViewModelTest {
                     CollectionItem(MovieId("emoji"), "The Emoji Movie"),
                     CollectionItem(MovieId("emoji2"), "The Emoji Movie II"),
                 )
+            )), viewModel.uiState.value)
+    }
+
+    // Test when get movie returns success, then state loading / success
+    @Test
+    fun `given valid model data no collection, then return loading and success view state`() = runBlockingTest {
+        given(getMovieById(any()))
+            .willReturn(Response.Success(EMOJI_MOVIE_DETAILS_NO_COLLECTION))
+        dispatcher.pauseDispatcher()
+        viewModel.getMovieDetails()
+
+        assertEquals(UIState.Loading, viewModel.uiState.value)
+        dispatcher.resumeDispatcher()
+        assertEquals(UIState.Success(
+            MovieDetailsItem(
+                "The Emoji Movie",
+                null,
+                null
             )), viewModel.uiState.value)
     }
 

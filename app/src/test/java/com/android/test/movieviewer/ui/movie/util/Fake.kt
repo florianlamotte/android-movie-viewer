@@ -31,6 +31,12 @@ class Fake {
             )
         )
 
+        val EMOJI_MOVIE_DETAILS_NO_COLLECTION = MovieDetails(
+            MovieId("emoji"),
+            "The Emoji Movie",
+            null
+        )
+
     }
 
 }

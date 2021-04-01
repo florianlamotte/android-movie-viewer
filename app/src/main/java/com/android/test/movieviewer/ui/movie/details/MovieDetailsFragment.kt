@@ -56,28 +56,30 @@ class MovieDetailsFragment : Fragment() {
         ).get(MovieDetailsViewModel::class.java)
 
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            val (loading, error, details) = when(uiState) {
+            val (loading, error, details, collection) = when(uiState) {
                 is UIState.Loading -> {
-                    listOf(View.VISIBLE, View.GONE, View.GONE)
+                    listOf(View.VISIBLE, View.GONE, View.GONE, View.GONE)
                 }
 
                 is UIState.Error -> {
-                    listOf(View.GONE, View.VISIBLE, View.GONE)
+                    listOf(View.GONE, View.VISIBLE, View.GONE, View.GONE)
                 }
 
                 is UIState.Success -> {
                     with(binding) {
                         movieDetailsTitle.text = uiState.data.title
-                        movieDetailsCollection.text = uiState.data.collectionName
+                        movieDetailsCollectionName.text = uiState.data.collectionName
                     }
-
-                    listOf(View.GONE, View.GONE, View.VISIBLE)
+                    listOf(View.GONE, View.GONE, View.VISIBLE,
+                        if (uiState.data.CollectionItems.isNullOrEmpty()) View.GONE else View.VISIBLE
+                    )
                 }
             }
             with(binding) {
                 movieDetailsProgress.visibility = loading
                 moviesDetailsError.visibility = error
                 movieDetailsGroup.visibility = details
+                movieDetailsCollectionGroup.visibility = collection
             }
         }
 
