@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.android.test.movieviewer.databinding.MovieDetailsFragmentBinding
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
+import com.android.test.movieviewer.ui.movie.list.MoviesListFragmentDirections
+import com.android.test.movieviewer.ui.movie.list.MoviesListItem
 import com.android.test.movieviewer.ui.util.CoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +53,11 @@ class MovieDetailsFragment : Fragment() {
         val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
         val movieId = args.id
 
+        val adapter = MovieDetailsCollectionAdapter {
+            onItemClicked(it)
+        }
+        binding.movieDetailsCollectionList.adapter = adapter
+
         viewModel = ViewModelProvider(
             this,
             MovieDetailsViewModelProvider(coroutineContextProvider, getMovieById, movieId)
@@ -69,6 +77,9 @@ class MovieDetailsFragment : Fragment() {
                     with(binding) {
                         movieDetailsTitle.text = uiState.data.title
                         movieDetailsCollectionName.text = uiState.data.collectionName
+                        uiState.data.CollectionItems?.let {
+                            adapter.data = it
+                        }
                     }
                     listOf(View.GONE, View.GONE, View.VISIBLE,
                         if (uiState.data.CollectionItems.isNullOrEmpty()) View.GONE else View.VISIBLE
@@ -90,4 +101,9 @@ class MovieDetailsFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
+    private fun onItemClicked(
+        item: CollectionItem
+    ) {
+    }
+
 }
