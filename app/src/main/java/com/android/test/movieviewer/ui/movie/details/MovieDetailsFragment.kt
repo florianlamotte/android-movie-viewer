@@ -104,6 +104,9 @@ class MovieDetailsFragment : Fragment() {
     private fun onItemClicked(
         item: CollectionItem
     ) {
+        findNavController().navigate(
+            MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(item.id)
+        )
     }
 
 }

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/moviesListFragment"
         android:name="com.android.test.movieviewer.ui.movie.list.MoviesListFragment"
-        android:label="movies_list_fragment"
-        tools:layout="@layout/movies_list_fragment" >
+        android:label="Movies List"
+        tools:layout="@layout/movies_list_fragment">
         <action
             android:id="@+id/action_moviesListFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -17,10 +17,13 @@
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.android.test.movieviewer.ui.movie.details.MovieDetailsFragment"
-        android:label="movie_details_fragment"
+        android:label="Movie Details"
         tools:layout="@layout/movie_details_fragment">
         <argument
             android:name="id"
             app:argType="com.android.test.movieviewer.domain.movie.MovieId" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_self"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>
