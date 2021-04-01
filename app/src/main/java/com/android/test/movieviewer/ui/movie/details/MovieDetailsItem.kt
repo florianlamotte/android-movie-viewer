@@ -10,5 +10,6 @@ data class MovieDetailsItem(
 
 data class CollectionItem(
     val id: MovieId,
-    val title: String
+    val title: String,
+    val imageUrl: String
 )

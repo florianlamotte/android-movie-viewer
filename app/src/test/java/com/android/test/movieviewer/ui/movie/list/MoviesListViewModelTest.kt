@@ -91,7 +91,9 @@ class MoviesListViewModelTest : TestCase() {
         assertEquals(listOf(
             MoviesListItem(
                 MovieId("emoji"),
-                "The Emoji Movie")
+                "The Emoji Movie",
+                "https://image.tmdb.org/t/p/original/emoji-url"
+            )
         ),
             actual.data
         )

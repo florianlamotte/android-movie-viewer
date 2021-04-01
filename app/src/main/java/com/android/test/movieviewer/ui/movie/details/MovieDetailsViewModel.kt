@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.domain.util.Response
@@ -34,7 +33,8 @@ class MovieDetailsViewModel(
                             collection?.movieCollection?.map { collectionItem ->
                                 CollectionItem(
                                     collectionItem.id,
-                                    collectionItem.title
+                                    collectionItem.title,
+                                    collectionItem.imageUrl
                                 )
                             }
                         )

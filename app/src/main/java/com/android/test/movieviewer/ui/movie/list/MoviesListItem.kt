@@ -5,4 +5,5 @@ import com.android.test.movieviewer.domain.movie.MovieId
 data class MoviesListItem(
     val id: MovieId,
     val title: String,
+    val imageUrl: String
 )

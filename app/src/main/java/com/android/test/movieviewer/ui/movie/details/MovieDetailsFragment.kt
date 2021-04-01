@@ -1,19 +1,20 @@
 package com.android.test.movieviewer.ui.movie.details
 
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.android.test.movieviewer.R
 import com.android.test.movieviewer.databinding.MovieDetailsFragmentBinding
-import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
-import com.android.test.movieviewer.ui.movie.list.MoviesListFragmentDirections
-import com.android.test.movieviewer.ui.movie.list.MoviesListItem
 import com.android.test.movieviewer.ui.util.CoroutineContextProvider
 import com.android.test.movieviewer.ui.util.UIState
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,6 +30,7 @@ class MovieDetailsFragment : Fragment() {
 
     @Inject
     lateinit var coroutineContextProvider: CoroutineContextProvider
+
     @Inject
     lateinit var getMovieById: GetMovieById
 
@@ -53,9 +55,16 @@ class MovieDetailsFragment : Fragment() {
         val args = MovieDetailsFragmentArgs.fromBundle(requireArguments())
         val movieId = args.id
 
-        val adapter = MovieDetailsCollectionAdapter {
+        val adapter = MovieDetailsCollectionAdapter({
             onItemClicked(it)
-        }
+        }, { url, imageView ->
+            Glide.with(this)
+                .load(url)
+                .placeholder(
+                    ColorDrawable(ContextCompat.getColor(requireContext(), R.color.light_grey))
+                )
+                .into(imageView)
+        })
         binding.movieDetailsCollectionList.adapter = adapter
 
         viewModel = ViewModelProvider(
@@ -64,7 +73,7 @@ class MovieDetailsFragment : Fragment() {
         ).get(MovieDetailsViewModel::class.java)
 
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            val (loading, error, details, collection) = when(uiState) {
+            val (loading, error, details, collection) = when (uiState) {
                 is UIState.Loading -> {
                     listOf(View.VISIBLE, View.GONE, View.GONE, View.GONE)
                 }
@@ -81,7 +90,8 @@ class MovieDetailsFragment : Fragment() {
                             adapter.data = it
                         }
                     }
-                    listOf(View.GONE, View.GONE, View.VISIBLE,
+                    listOf(
+                        View.GONE, View.GONE, View.VISIBLE,
                         if (uiState.data.CollectionItems.isNullOrEmpty()) View.GONE else View.VISIBLE
                     )
                 }
@@ -101,6 +111,7 @@ class MovieDetailsFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
+
     private fun onItemClicked(
         item: CollectionItem
     ) {

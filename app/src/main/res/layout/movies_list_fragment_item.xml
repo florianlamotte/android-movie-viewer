@@ -12,4 +12,9 @@
         android:layout_margin="@dimen/views_margin"
         tools:text="This is the Emoji movie" />
 
+    <ImageView
+        android:id="@+id/movie_item_image"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+
 </LinearLayout>

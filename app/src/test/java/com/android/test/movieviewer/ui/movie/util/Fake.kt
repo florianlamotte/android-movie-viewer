@@ -11,12 +11,14 @@ class Fake {
 
         val EMOJI_MOVIE = Movie(
             MovieId("emoji"),
-            "The Emoji Movie"
+            "The Emoji Movie",
+            "https://image.tmdb.org/t/p/original/emoji-url"
         )
 
         val EMOJI_MOVIE2 = Movie(
             MovieId("emoji2"),
-            "The Emoji Movie II"
+            "The Emoji Movie II",
+            "https://image.tmdb.org/t/p/original/emoji-url2"
         )
 
         val EMOJI_MOVIE_DETAILS = MovieDetails(

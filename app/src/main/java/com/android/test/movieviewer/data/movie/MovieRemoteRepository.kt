@@ -14,7 +14,8 @@ class MovieRemoteRepository @Inject constructor(
             val moviesNowPlaying = theMovieDbAPi.moviesNowPlaying().movies.map {
                 Movie(
                     MovieId(it.id),
-                    it.title
+                    it.title,
+                    getFullImageUrlFromPath(it.imageUrl)
                 )
             }
             Response.Success(moviesNowPlaying)
@@ -31,10 +32,11 @@ class MovieRemoteRepository @Inject constructor(
                 val apiCollection = theMovieDbAPi.collection(apiMovie.collection.collectionId)
                 MovieCollection(
                     it.collectionName,
-                    apiCollection.parts.map {  collectionItem ->
+                    apiCollection.parts.map { collectionItem ->
                         Movie(
                             MovieId(collectionItem.movieId),
-                            collectionItem.movieTitle
+                            collectionItem.movieTitle,
+                            getFullImageUrlFromPath(collectionItem.imageUrl)
                         )
                     }
                 )
@@ -53,4 +55,7 @@ class MovieRemoteRepository @Inject constructor(
         }
     }
 
+    private fun getFullImageUrlFromPath(path: String): String {
+        return "https://image.tmdb.org/t/p/original/$path"
+    }
 }

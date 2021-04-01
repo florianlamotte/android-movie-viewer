@@ -51,7 +51,7 @@ class MovieRemoteRepositoryTest {
         given(api.moviesNowPlaying()).willReturn(
             ApiDataMoviesNowPlayingResponse(
                 listOf(
-                    ApiDataMovieNowPlaying("emoji", "The Emoji Movie")
+                    ApiDataMovieNowPlaying("emoji", "The Emoji Movie", "emoji-url")
                 )
             )
         )
@@ -89,8 +89,8 @@ class MovieRemoteRepositoryTest {
             ApiDataCollection(
                 "emo3",
                 listOf(
-                    ApiDataCollectionParts("emoji", "The Emoji Movie"),
-                    ApiDataCollectionParts("emoji2", "The Emoji Movie II"),
+                    ApiDataCollectionParts("emoji", "The Emoji Movie", "emoji-url"),
+                    ApiDataCollectionParts("emoji2", "The Emoji Movie II", "emoji-url2"),
                 )
             )
         )

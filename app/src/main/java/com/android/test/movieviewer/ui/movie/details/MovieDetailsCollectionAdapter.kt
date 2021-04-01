@@ -2,11 +2,13 @@ package com.android.test.movieviewer.ui.movie.details
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.test.movieviewer.databinding.MoviesListFragmentItemBinding
 
 class MovieDetailsCollectionAdapter(
-    private val onItemClicked: (CollectionItem) -> Unit
+    private val onItemClicked: (CollectionItem) -> Unit,
+    private val loadImageUrl: (String, ImageView) -> Unit
 ) :
     RecyclerView.Adapter<MovieDetailsCollectionAdapter.CollectionItemViewHolder>() {
 
@@ -44,6 +46,7 @@ class MovieDetailsCollectionAdapter(
         fun bind(item: CollectionItem) {
             with(binding) {
                 movieItemTitle.text = item.title
+                loadImageUrl(item.imageUrl, movieItemImage)
             }
         }
 

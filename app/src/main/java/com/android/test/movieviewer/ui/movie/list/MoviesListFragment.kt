@@ -1,15 +1,18 @@
 package com.android.test.movieviewer.ui.movie.list
 
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.android.test.movieviewer.R
 import com.android.test.movieviewer.databinding.MoviesListFragmentBinding
 import com.android.test.movieviewer.ui.util.UIState
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -45,9 +48,16 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = MoviesListAdapter { item ->
+        val adapter = MoviesListAdapter( { item ->
             onItemClicked(item)
-        }
+        }, { url, imageView ->
+            Glide.with(this)
+                .load(url)
+                .placeholder(
+                    ColorDrawable(ContextCompat.getColor(requireContext(), R.color.light_grey))
+                )
+                .into(imageView)        }
+        )
         binding.listMovies.adapter = adapter
 
         viewModel = ViewModelProvider(this, viewModelProvider).get(MoviesListViewModel::class.java)

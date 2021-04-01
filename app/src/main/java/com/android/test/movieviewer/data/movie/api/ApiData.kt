@@ -12,6 +12,8 @@ data class ApiDataMovieNowPlaying(
     val id: String,
     @SerializedName("title")
     val title: String,
+    @SerializedName("poster_path")
+    val imageUrl: String
 )
 
 data class ApiDataMovieResponse(
@@ -44,4 +46,6 @@ data class ApiDataCollectionParts(
     val movieId: String,
     @SerializedName("title")
     val movieTitle: String,
+    @SerializedName("poster_path")
+    val imageUrl: String
 )

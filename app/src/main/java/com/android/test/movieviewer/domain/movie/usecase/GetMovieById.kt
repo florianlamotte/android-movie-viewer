@@ -1,6 +1,5 @@
 package com.android.test.movieviewer.domain.movie.usecase
 
-import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.movie.MovieDetails
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.MovieRepository

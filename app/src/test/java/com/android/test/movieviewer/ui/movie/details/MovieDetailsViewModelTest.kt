@@ -1,11 +1,9 @@
 package com.android.test.movieviewer.ui.movie.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.android.test.movieviewer.domain.movie.Movie
 import com.android.test.movieviewer.domain.movie.MovieId
 import com.android.test.movieviewer.domain.movie.usecase.GetMovieById
 import com.android.test.movieviewer.domain.util.Response
-import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE_DETAILS
 import com.android.test.movieviewer.ui.movie.util.Fake.Companion.EMOJI_MOVIE_DETAILS_NO_COLLECTION
 import com.android.test.movieviewer.ui.movie.util.TestCoroutineContextProvider
@@ -82,8 +80,8 @@ class MovieDetailsViewModelTest {
                 "The Emoji Movie",
                 "The Emos",
                 listOf(
-                    CollectionItem(MovieId("emoji"), "The Emoji Movie"),
-                    CollectionItem(MovieId("emoji2"), "The Emoji Movie II"),
+                    CollectionItem(MovieId("emoji"), "The Emoji Movie", "https://image.tmdb.org/t/p/original/emoji-url"),
+                    CollectionItem(MovieId("emoji2"), "The Emoji Movie II", "https://image.tmdb.org/t/p/original/emoji-url2"),
                 )
             )), viewModel.uiState.value)
     }

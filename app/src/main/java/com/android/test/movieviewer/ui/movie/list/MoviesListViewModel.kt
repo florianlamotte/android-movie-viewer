@@ -30,7 +30,8 @@ class MoviesListViewModel(
                         response.data.map {
                             MoviesListItem(
                                 it.id,
-                                it.title
+                                it.title,
+                                it.imageUrl
                             )
                         }
                     )
