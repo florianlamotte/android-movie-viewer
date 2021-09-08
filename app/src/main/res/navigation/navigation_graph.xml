@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph.xml"
-    app:startDestination="@id/moviesListFragment">
+    app:startDestination="@id/buttonFragment">
 
+    <fragment
+        android:id="@+id/buttonFragment"
+        android:name="com.android.test.movieviewer.ui.movie.button.ButtonFragment"
+        android:label="Button"
+        tools:layout="@layout/button_fragment">
+    </fragment>
     <fragment
         android:id="@+id/moviesListFragment"
         android:name="com.android.test.movieviewer.ui.movie.list.MoviesListFragment"
