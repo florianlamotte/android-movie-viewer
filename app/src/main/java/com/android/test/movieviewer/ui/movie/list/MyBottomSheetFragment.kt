@@ -43,7 +43,7 @@ class MyBottomSheetFragment: BottomSheetDialogFragment() {
                 ?.behavior
                 ?.apply {
                     setPeekHeight(PEEK_HEIGHT_AUTO, true)
-                    isFitToContents = false
+                    isFitToContents = true
                     expandedOffset = getBottomSheetDialogDefaultHeight()
                     state = BottomSheetBehavior.STATE_EXPANDED
                 }
